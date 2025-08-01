@@ -1,18 +1,14 @@
+export interface Address {
+  city: string;
+  country: string;
+}
+
 export interface PropertyProps {
   name: string;
-  address: {
-    state: string;
-    city: string;
-    country: string;
-  };
   rating: number;
-  category: string[];
-  price: number;
-  offers: {
-    bed: string;
-    shower: string;
-    occupants: string;
-  };
+  address: Address;
   image: string;
-  discount: string;
+  price: number;
+  description: string;
+  category: string[];
 }
