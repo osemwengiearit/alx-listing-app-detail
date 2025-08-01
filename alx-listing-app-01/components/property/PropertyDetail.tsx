@@ -1,6 +1,23 @@
 import { PropertyProps } from '@/interfaces';
 import BookingSection from './BookingSection';
 import Image from 'next/image';
+import ReviewSection from './ReviewSection'; // ✅ Correct import
+
+// ✅ Move this OUTSIDE the return
+const mockReviews = [
+  {
+    name: 'Bright',
+    avatar: '/avatar1.png',
+    rating: 5,
+    comment: 'Amazing place! Would definitely come again.',
+  },
+  {
+    name: 'Ada',
+    avatar: '/avatar2.png',
+    rating: 4,
+    comment: 'Very comfortable and well located.',
+  },
+];
 
 const PropertyDetail: React.FC<{ property: PropertyProps }> = ({
   property,
@@ -55,6 +72,9 @@ const PropertyDetail: React.FC<{ property: PropertyProps }> = ({
           <BookingSection price={property.price} />
         </div>
       </div>
+
+      {/* ✅ Review Section at the bottom */}
+      <ReviewSection reviews={mockReviews} />
     </div>
   );
 };
