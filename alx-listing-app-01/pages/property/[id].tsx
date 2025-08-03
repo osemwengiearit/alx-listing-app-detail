@@ -1,37 +1,30 @@
-import { useRouter } from 'next/router';
-import { PROPERTYLISTINGSAMPLE } from '@/constants';
+import { GetStaticPaths, GetStaticProps } from 'next';
 import PropertyDetail from '@/components/property/PropertyDetail';
-import ReviewSection from '@/components/property/ReviewSection';
+import { PropertyProps } from '@/interfaces';
+import { PROPERTYLISTINGSAMPLE } from '@/constants';
 
-const PropertyPage = () => {
-  const router = useRouter();
-  const { id } = router.query;
-  const property = PROPERTYLISTINGSAMPLE.find(item => item.name === id);
+interface PropertyPageProps {
+  property: PropertyProps;
+}
 
-  if (!property) return <p className="p-6 text-red-500">Property not found</p>;
+const PropertyPage = ({ property }: PropertyPageProps) => {
+  return <PropertyDetail property={property} />;
+};
 
-  // Mock review data
-  const mockReviews = [
-    {
-      name: 'Bright',
-      avatar: '/avatar1.png',
-      rating: 5,
-      comment: 'Amazing place! Would definitely come again.',
-    },
-    {
-      name: 'Ada',
-      avatar: '/avatar2.png',
-      rating: 4,
-      comment: 'Very comfortable and well located.',
-    },
-  ];
+export const getStaticPaths: GetStaticPaths = async () => {
+  const paths = PROPERTYLISTINGSAMPLE.map(property => ({
+    params: { id: property.id.toString() },
+  }));
 
-  return (
-    <div className="container mx-auto px-4 py-8">
-      <PropertyDetail property={property} />
-      <ReviewSection reviews={mockReviews} />
-    </div>
+  return { paths, fallback: false };
+};
+
+export const getStaticProps: GetStaticProps = async ({ params }) => {
+  const property = PROPERTYLISTINGSAMPLE.find(
+    p => p.id.toString() === params?.id
   );
+
+  return { props: { property } };
 };
 
 export default PropertyPage;
