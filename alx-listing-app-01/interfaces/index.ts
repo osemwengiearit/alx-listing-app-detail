@@ -1,14 +1,13 @@
-export interface Address {
-  city: string;
-  country: string;
-}
-
 export interface PropertyProps {
+  id: string;
   name: string;
-  rating: number;
-  address: Address;
   image: string;
   price: number;
+  rating: number;
   description: string;
+  address: {
+    city: string;
+    country: string;
+  };
   category: string[];
 }
